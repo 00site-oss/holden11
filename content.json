@@ -1,0 +1,225 @@
+{
+  "config": {
+    "brand": "brand",
+    "tagline": ["Plumbers", "Electricians", "HVAC Technicians"],
+    "phone": "555-555-5555",
+    "bookUrl": "#book",
+    "address": "123 Main Street, Your City, ST 00000",
+    "email": "service@example.com",
+    "license": "LIC #XXXXX",
+    "adminPassword": "admin123",
+    "nav": [
+      {
+        "label": "Our Services",
+        "children": ["Plumbing", "Electrical", "Heating & Cooling", "Water Heaters"]
+      },
+      {
+        "label": "Offers",
+        "href": "#offers",
+        "highlight": true
+      },
+      {
+        "label": "Pricing",
+        "children": ["Membership Plans", "Financing", "Service Rates"]
+      },
+      {
+        "label": "Learning Center",
+        "href": "#learn"
+      },
+      {
+        "label": "Locations",
+        "children": ["Columbus", "Dayton", "Cincinnati"]
+      },
+      {
+        "label": "Order Filters",
+        "href": "#filters"
+      },
+      {
+        "label": "About Us",
+        "children": ["Our Story", "Careers", "Reviews"]
+      }
+    ]
+  },
+  "hero": {
+    "lines": [
+      { "text": "We", "cls": "s-lg green" },
+      { "text": "Show Up", "cls": "s-sm green" },
+      { "text": "For", "cls": "s-sm green" },
+      { "text": "You", "cls": "s-xl white" },
+      { "text": "When You", "cls": "s-sm green" },
+      { "text": "Need", "cls": "s-xl white" },
+      { "text": "Us", "cls": "s-xl white" },
+      { "text": "Most", "cls": "s-md green" }
+    ],
+    "reviewCount": "XXK",
+    "promoAmount": "$XXX",
+    "promoTitle": "in Plumbing Repairs",
+    "promoSub": "with the installation of a Water Heater",
+    "promoFoot": "...because we're already there!"
+  },
+  "services": [
+    {
+      "title": "Plumbing",
+      "icon": "🚰",
+      "from": "#1796d0",
+      "to": "#0b4f93",
+      "text": "Leaky faucets, burst pipes or a full fixture install. Our plumbers get it fixed right the first time.",
+      "href": "#plumbing"
+    },
+    {
+      "title": "Drain and Sewer",
+      "icon": "🪠",
+      "from": "#4caf50",
+      "to": "#0f5d4a",
+      "text": "Clear clogs and keep water moving with fast, careful drain and sewer service.",
+      "href": "#drain-and-sewer"
+    },
+    {
+      "title": "Electrical",
+      "icon": "💡",
+      "from": "#f5a623",
+      "to": "#c0392b",
+      "text": "Safe, code-compliant wiring, panels and lighting from licensed electricians.",
+      "href": "#electrical"
+    },
+    {
+      "title": "Heating and Cooling",
+      "icon": "❄️",
+      "from": "#5dade2",
+      "to": "#1b4f72",
+      "text": "Stay comfortable all year with dependable HVAC repair, tune-ups and installs.",
+      "href": "#heating-and-cooling"
+    }
+  ],
+  "deals": [
+    {
+      "price": "$XX",
+      "lead": "Only",
+      "title": "Drain Special",
+      "sub": "Drain clearing offer",
+      "tone": "lime"
+    },
+    {
+      "price": "$XX",
+      "lead": "Only",
+      "title": "A/C or Furnace",
+      "sub": "Clean & check",
+      "tone": "green"
+    },
+    {
+      "price": "$XXXX",
+      "lead": "Up to",
+      "title": "Repair Buyback",
+      "sub": "on your new HVAC system",
+      "tone": "navy",
+      "wide": true
+    },
+    {
+      "price": "$XX",
+      "lead": "Only",
+      "title": "Sump Pump",
+      "sub": "Inspection",
+      "tone": "green"
+    },
+    {
+      "price": "$XX",
+      "lead": "Only",
+      "title": "Water Heater",
+      "sub": "Clean & check",
+      "tone": "teal"
+    }
+  ],
+  "about": {
+    "heading": "Serving Customers and Helping Others Build a Life in the Trades",
+    "paragraphs": [
+      "Our founder, [Founder Name], started out in the trades right after school. The road wasn't smooth, and there were plenty of people who doubted the path, but a few years later a contractor's license and a first small business were in hand.",
+      "When tough times hit, the business had to start over. With a small trusted team and a lot of determination, [Founder Name] rebuilt it from the ground up into the home service company it is today."
+    ],
+    "linkText": "plumbing company",
+    "cta": "Know More About",
+    "photoCaption": "Founder photo",
+    "founderName": "[Founder Name], Founder/CEO"
+  },
+  "membership": {
+    "name": "brand",
+    "plan": "Advantage",
+    "kind": "Membership",
+    "heading": "Unmatched Service & Exclusive Savings for Your Home",
+    "text": "With our membership, enjoy priority scheduling, discounts on services, and annual system checks. Plus, get exclusive offers, a workmanship guarantee, and more, all designed to keep your home efficient and worry-free.",
+    "cta": "Get Membership Now",
+    "booklet": "Membership Guide"
+  },
+  "features": {
+    "plumbing": {
+      "heading": "Professional Plumbing and Water Heater Services",
+      "before": "Our team of plumbers, electricians and HVAC technicians delivers dependable service right to your doorstep. Whether you're dealing with a stubborn water heater or thinking about a tankless upgrade, we have you covered. Our experience with ",
+      "linkText": "water heater repair",
+      "after": " means reliable hot water and a more efficient home. And we don't stop at repairs: our tankless water heater installation and maintenance services help you enjoy endless hot showers with the touch of a button.",
+      "cta": "More About Plumbing"
+    },
+    "drain": {
+      "heading": "Drain and Sewer Services, Now",
+      "before": "Even the smallest plumbing issues can quickly turn into major problems. That's where our drain and sewer expertise comes in. Our team uses modern equipment to find and resolve issues, from a clogged drain to a damaged sewer line. With our efficient ",
+      "linkText": "drain clearing and cleaning services",
+      "after": ", you can be sure your home's plumbing system is in safe hands. We carefully remove blockages and build-up, preventing bigger problems before they start.",
+      "cta": "More About Drain & Sewer"
+    },
+    "electric": {
+      "heading": "Expert Electrical Services",
+      "before": "When the lights flicker or the outlets go quiet, count on skilled, licensed electricians. Backed by years of experience, we deliver safe, modern electrical solutions for your home. From a simple switch to a full panel upgrade, every job is about safety, efficiency and earning your trust. Learn more about our ",
+      "linkText": "electrical repair services",
+      "linkHref": "#electrical",
+      "after": ".",
+      "cta": "More About Electric",
+      "ctaHref": "#electrical"
+    },
+    "hvac": {
+      "heading": "Heating and Cooling Comfort for Your Home",
+      "before": "As the seasons change, your comfort depends on a reliable, efficient HVAC system. We take a careful approach to heat pumps, AC maintenance and furnace repair so your home stays at the right temperature. When it's time for a new install or an ",
+      "linkText": "AC repair",
+      "linkHref": "#hvac-repair",
+      "after": ", our skilled technicians tailor solutions to your home. We're your neighbors, committed to a comfortable home with every service call.",
+      "cta": "More About HVAC",
+      "ctaHref": "#heating-and-cooling"
+    }
+  },
+  "reviews": [
+    {
+      "name": "Customer Name",
+      "text": "Sample review text. Replace this with a real review from one of your customers, with their permission."
+    },
+    {
+      "name": "Customer Name",
+      "text": "Sample review text. Add a short, honest quote about the service, the technician and the result."
+    },
+    {
+      "name": "Customer Name",
+      "text": "Sample review text. A second real testimonial can go here once you have it."
+    },
+    {
+      "name": "Customer Name",
+      "text": "Sample review text. Connect this to your reviews source when you're ready."
+    },
+    {
+      "name": "Customer Name",
+      "text": "Sample review text. Keep each review short so the cards stay balanced."
+    }
+  ],
+  "guarantees": [
+    { "icon": "🤝", "label": "Up-Front Pricing Guarantee", "tone": "lime" },
+    { "icon": "⭐", "label": "Trusted Employee Guarantee", "tone": "blue" },
+    { "icon": "🏅", "label": "Professional Team Guarantee", "tone": "lime" },
+    { "icon": "🛡️", "label": "Property Protection Guarantee", "tone": "blue" },
+    { "icon": "🧹", "label": "Cleaner Than We Found It Guarantee", "tone": "lime" },
+    { "icon": "✅", "label": "No Lemons Guarantee", "tone": "blue" },
+    { "icon": "❤️", "label": "One-Year Make It Happen Guarantee", "tone": "lime" }
+  ],
+  "areas": [
+    "Service Area 1", "Service Area 2", "Service Area 3", "Service Area 4", "Service Area 5",
+    "Service Area 6", "Service Area 7", "Service Area 8", "Service Area 9", "Service Area 10",
+    "Service Area 11", "Service Area 12", "Service Area 13", "Service Area 14", "Service Area 15",
+    "Service Area 16", "Service Area 17", "Service Area 18", "Service Area 19", "Service Area 20",
+    "Service Area 21", "Service Area 22", "Service Area 23", "Service Area 24", "Service Area 25",
+    "Service Area 26", "Service Area 27", "Service Area 28", "Service Area 29", "Service Area 30"
+  ]
+}

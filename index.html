@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Home Services</title>
+<link rel="stylesheet" href="site.css"/>
+<style>
+/* ensure edit overlays don't break layout */
+#site{min-height:100vh}
+body.edit-preview a{pointer-events:none}
+</style>
+</head>
+<body>
+<div id="site">
+
+<div class="site-header">
+  <div class="topbar"></div>
+  <div class="header-inner">
+    <div class="row1">
+      <div class="brand">
+        <div class="logo-mark">brand</div>
+        <div class="tagline"><div>Plumbers</div><div>Electricians</div><div>HVAC Technicians</div></div>
+      </div>
+      <div class="ctas">
+        <a class="btn blue" href="#book">Book Online</a>
+        <a class="btn green" href="tel:5555555555">Call Now 555-555-5555</a>
+      </div>
+      <button class="burger" id="burger" type="button" aria-expanded="false">☰ Menu</button>
+    </div>
+    <nav id="mnav">
+      <div class="item"><a class="link" href="#services">Our Services</a></div>
+      <div class="item"><a class="link offers" href="#offers">Offers</a></div>
+      <div class="item"><a class="link" href="#financing">Pricing</a></div>
+      <div class="item"><a class="link" href="#about">About Us</a></div>
+    </nav>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1 class="headline">
+        <span class="s-lg green">We</span>
+        <span class="s-sm green">Show Up</span>
+        <span class="s-sm green">For</span>
+        <span class="s-xl white">You</span>
+        <span class="s-sm green">When You</span>
+        <span class="s-xl white">Need</span>
+        <span class="s-xl white">Us</span>
+        <span class="s-md green">Most</span>
+      </h1>
+      <div class="hero-ctas">
+        <a class="btn blue" href="#book">Book Online</a>
+        <span class="or">Or</span>
+        <a class="btn green" href="tel:5555555555">Call Now</a>
+      </div>
+    </div>
+    <div class="badge"><b>XXK</b><span>Reviews</span></div>
+  </div>
+</section>
+
+<div class="promo-wrap">
+  <div class="promo">
+    <div class="promo-get"><b>Get</b><i>up to</i></div>
+    <div class="promo-amt">$XXX</div>
+    <div class="promo-text">
+      <div class="t1">in Plumbing Repairs</div>
+      <div class="t2">with the installation of a Water Heater</div>
+    </div>
+    <div class="promo-van">🚐</div>
+  </div>
+  <div class="promo-foot">...because we're already there!</div>
+  <div class="promo-wave"></div>
+</div>
+
+<section class="services" id="services">
+  <h2 class="section-title">Our Services</h2>
+  <div class="section-rule"></div>
+  <div class="cards">
+    <article class="card">
+      <div class="card-img" style="background:linear-gradient(135deg,#1796d0,#0b4f93)"><span>🚰</span></div>
+      <div class="card-body">
+        <h3>Plumbing</h3>
+        <p>Leaky faucets, burst pipes or a full fixture install. Our plumbers get it fixed right the first time.</p>
+        <a class="more" href="#plumbing">Read More</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img" style="background:linear-gradient(135deg,#4caf50,#0f5d4a)"><span>🪠</span></div>
+      <div class="card-body">
+        <h3>Drain and Sewer</h3>
+        <p>Clear clogs and keep water moving with fast, careful drain and sewer service.</p>
+        <a class="more" href="#drain">Read More</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img" style="background:linear-gradient(135deg,#f5a623,#c0392b)"><span>💡</span></div>
+      <div class="card-body">
+        <h3>Electrical</h3>
+        <p>Safe, code-compliant wiring, panels and lighting from licensed electricians.</p>
+        <a class="more" href="#electrical">Read More</a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-img" style="background:linear-gradient(135deg,#5dade2,#1b4f72)"><span>❄️</span></div>
+      <div class="card-body">
+        <h3>Heating and Cooling</h3>
+        <p>Stay comfortable all year with dependable HVAC repair, tune-ups and installs.</p>
+        <a class="more" href="#hvac">Read More</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="deals" id="offers">
+  <h2 class="section-title">Our Deals</h2>
+  <div class="section-rule"></div>
+  <div class="deal-row">
+    <a href="#offers" class="deal"><span class="deal-price lime"><small>Only</small><b>$XX</b></span><span class="deal-label"><strong>Drain Special</strong><em>Drain clearing offer</em></span></a>
+    <a href="#offers" class="deal"><span class="deal-price green"><small>Only</small><b>$XX</b></span><span class="deal-label"><strong>A/C or Furnace</strong><em>Clean & check</em></span></a>
+    <a href="#offers" class="deal wide"><span class="deal-price navy"><small>Up to</small><b>$XXXX</b></span><span class="deal-label"><strong>Repair Buyback</strong><em>on your new HVAC system</em></span></a>
+  </div>
+</section>
+
+<section class="financing" id="financing">
+  <h2 class="fin-title">Financing Available</h2>
+  <a class="btn blue" href="#financing">Apply Now</a>
+</section>
+
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-copy">
+      <h2 class="about-title">Serving Customers and Helping Others Build a Life in the Trades</h2>
+      <div class="about-rule"></div>
+      <p>Our founder started out in the trades right after school. The road wasn't smooth, but determination built the company you trust today.</p>
+      <p>With a small trusted team, the business grew into a full home service company — plumbing, electrical, and HVAC.</p>
+      <div class="about-cta" style="margin-top:24px"><a class="btn blue" href="#about">Know More About</a></div>
+    </div>
+    <div class="about-photo"><span>Founder photo</span></div>
+  </div>
+</section>
+
+<section class="member" id="membership">
+  <div class="member-card">
+    <div class="member-copy">
+      <div class="member-logo">
+        <span class="m-name">brand</span>
+        <span class="m-plan">Advantage</span>
+        <span class="m-kind">Membership</span>
+      </div>
+      <h2 class="member-title">Unmatched Service & Exclusive Savings for Your Home</h2>
+      <p>Priority scheduling, discounts on services, and annual system checks — designed to keep your home efficient and worry-free.</p>
+      <div style="margin-top:16px"><a class="btn blue" href="#membership">Get Membership Now</a></div>
+    </div>
+    <div class="member-booklet"><span>Membership Guide</span></div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <h2 class="rev-title">Customer Reviews</h2>
+  <div class="rev-rule"></div>
+  <div class="rev-cards">
+    <article class="rev-card">
+      <p>Sample review text. Replace this with a real review from one of your customers.</p>
+      <div class="rev-who">
+        <div class="avatar">CN</div>
+        <div><div class="stars">★★★★★</div><div class="rev-name">Customer Name</div></div>
+      </div>
+    </article>
+    <article class="rev-card">
+      <p>Sample review text. Add a short, honest quote about the service and the result.</p>
+      <div class="rev-who">
+        <div class="avatar">CN</div>
+        <div><div class="stars">★★★★★</div><div class="rev-name">Customer Name</div></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="guarantees">
+  <div class="g-van"><span>🚐</span></div>
+  <div class="g-grid">
+    <div class="g-item"><div class="g-circle lime">🤝</div><div class="g-label">Up-Front Pricing Guarantee</div></div>
+    <div class="g-item"><div class="g-circle blue">⭐</div><div class="g-label">Trusted Employee Guarantee</div></div>
+    <div class="g-item"><div class="g-circle lime">🏅</div><div class="g-label">Professional Team Guarantee</div></div>
+    <div class="g-item"><div class="g-circle blue">🛡️</div><div class="g-label">Property Protection Guarantee</div></div>
+  </div>
+</section>
+
+<section class="schedule">
+  <h2>Schedule an Appointment Today!</h2>
+  <div class="hero-ctas center">
+    <a class="btn blue sm" href="#book">Book Online</a>
+    <span class="or">Or</span>
+    <a class="btn green sm" href="tel:5555555555">Call Now</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="f-van"><span>🚐</span></div>
+  <div class="f-inner">
+    <div class="f-col">
+      <h3>Connect With Us</h3>
+      <p class="f-line">📍 123 Main Street, Your City, ST 00000</p>
+      <p class="f-line">✉️ service@example.com</p>
+    </div>
+    <div class="f-col f-center">
+      <a class="f-call" href="tel:5555555555">
+        <span class="f-ico">📞</span>
+        <span><small>Call us for same-day service</small><b>555-555-5555</b></span>
+      </a>
+      <p class="f-lic">LIC #XXXXX</p>
+    </div>
+    <div class="f-col">
+      <h3>Service Areas</h3>
+      <p class="f-line">Serving your local community</p>
+    </div>
+  </div>
+  <p class="f-copy">Copyright © 2026 brand. All Rights Reserved</p>
+</footer>
+
+</div><!-- /#site -->
+
+<script>
+(function () {
+  const isEdit = /[?&]edit=1/.test(location.search);
+  if (isEdit) document.body.classList.add("edit-preview");
+
+  // Mobile nav
+  const burger = document.getElementById("burger");
+  const nav = document.getElementById("mnav");
+  if (burger && nav) {
+    burger.addEventListener("click", function () {
+      const open = nav.classList.toggle("show");
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  // Load published HTML from API (public)
+  function done() {
+    window.siteReady = true;
+  }
+
+  if (isEdit) {
+    // In admin iframe: use original DOM (or still load live so editor sees published)
+    fetch("/api/content")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && d.html) {
+          document.getElementById("site").innerHTML = d.html;
+        }
+      })
+      .catch(function () {})
+      .finally(done);
+  } else {
+    fetch("/api/content")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && d.html) {
+          document.getElementById("site").innerHTML = d.html;
+        }
+      })
+      .catch(function () {})
+      .finally(done);
+  }
+})();
+</script>
+</body>
+</html>

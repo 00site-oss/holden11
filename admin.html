@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Site Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:13px system-ui,sans-serif;display:flex;flex-direction:column;height:100vh;background:#e6e9ef;color:#1c2740}
+#top{background:#1c2740;color:#fff;padding:8px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#top b{font-size:15px;margin-right:8px}#top .sp{flex:1}
+button,select,.b{padding:7px 12px;border:0;border-radius:6px;background:#3d4d73;color:#fff;font:600 12px system-ui;cursor:pointer;text-decoration:none}
+button:hover{filter:brightness(1.15)}button:disabled{opacity:.4;cursor:default}
+button.on{background:#a4694b}button.save{background:#a4694b;font-size:13px;padding:8px 18px}button.danger{background:#9b2c2c}
+select{max-width:160px;background:#3d4d73;color:#fff;border:0;border-radius:6px;padding:7px}
+#main{flex:1;display:flex;min-height:0}
+#stage{flex:1;display:flex;justify-content:center;overflow:auto;padding:12px}
+iframe{border:0;background:#fff;height:100%;width:100%;box-shadow:0 2px 20px #0003;transition:width .2s}
+#panel{width:320px;background:#fff;border-left:1px solid #cfd4de;overflow:auto;padding:14px}
+#panel h4{margin:16px 0 6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7690}
+#panel h4:first-child{margin-top:0}
+.row{display:flex;gap:6px;align-items:center;margin-bottom:6px}.row label{width:78px;color:#556;font-size:12px}
+.row input[type=text],.row input[type=number],.row textarea,.row select{flex:1;min-width:0;padding:6px 8px;border:1px solid #c5cbd8;border-radius:6px;font:12px system-ui;background:#fff;color:#1c2740}
+.row input[type=color]{width:38px;height:28px;padding:0;border:1px solid #c5cbd8;border-radius:6px;background:#fff}
+textarea{min-height:90px;resize:vertical;width:100%}
+.crumb{background:#eef0f5;border-radius:6px;padding:7px 9px;margin-bottom:10px;font-family:monospace;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.muted{color:#6b7690;line-height:1.5}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.grid2 button,#panel button{background:#e4e8f1;color:#1c2740}#panel button.danger{background:#f3d6d6;color:#9b2c2c}
+#msg{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1c7a3a;color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;display:none;z-index:99}#msg.err{background:#b3261e}
+#login{position:fixed;inset:0;background:#1c2740;display:flex;align-items:center;justify-content:center;z-index:100}
+#login div{background:#fff;padding:28px;border-radius:12px;width:340px}
+#login input{width:100%;padding:10px;margin:10px 0;border:1px solid #c5cbd8;border-radius:6px;font-size:14px}
+#login button{width:100%;padding:11px;background:#a4694b;font-size:14px}
+</style>
+</head>
+<body>
+
+<div id="login"><div>
+<h2 id="lt" style="margin:0 0 4px">Site Admin</h2>
+<p id="ld" class="muted" style="margin:0"></p>
+<input type="password" id="lpw" placeholder="Password" autocomplete="current-password">
+<input type="password" id="lpw2" placeholder="Repeat password" style="display:none">
+<button id="lgo">Sign in</button>
+<p id="lerr" style="color:#b3261e;margin:8px 0 0"></p>
+</div></div>
+
+<div id="top">
+<b>Site Admin</b>
+<button id="undo" title="Ctrl+Z">↶ Undo</button><button id="redo" title="Ctrl+Y">↷ Redo</button>
+<span style="width:10px"></span>
+<button data-w="100%" class="dev on">Desktop</button><button data-w="768px" class="dev">Tablet</button><button data-w="390px" class="dev">Mobile</button>
+<span class="sp"></span>
+<span id="dirty" style="display:none;color:#ffcf8a">● Unsaved changes</span>
+<select id="hist"><option value="">Version history…</option></select>
+<a class="b" href="index.html" target="_blank">View site</a>
+<button class="danger" id="reset">Reset</button>
+<button class="save" id="save">Save &amp; publish</button>
+</div>
+<div id="main">
+<div id="stage"><iframe id="f" src="index.html?edit=1"></iframe></div>
+<div id="panel"></div>
+</div>
+<input type="file" id="file" accept="image/*" hidden>
+<div id="msg"></div>
+
+<script>
+const $=id=>document.getElementById(id),f=$("f");
+let PW=sessionStorage.getItem("hpw")||"",sel=null,hist=[],hi=-1,isDirty=false,fileCb=null,editing=null;
+const D=()=>f.contentDocument,W=()=>f.contentWindow,S=()=>D()&&D().getElementById("site");
+const toast=(t,e)=>{const m=$("msg");m.textContent=t;m.className=e?"err":"";m.style.display="block";clearTimeout(m.t);m.t=setTimeout(()=>m.style.display="none",4000)};
+const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+
+async function api(method,qs="",body,pw=PW){
+  const r=await fetch("/api/content"+qs,{method,headers:{"Content-Type":"application/json","x-admin-password":pw},body:body?JSON.stringify(body):undefined});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(d.error||("Request failed ("+r.status+")"));
+  return d;
+}
+async function boot(){
+  let st={};
+  try{st=await (await fetch("/api/content?status=1")).json()}catch{ $("lerr").textContent="Can't reach the Netlify function. Open this page from your live Netlify address, not from a file.";return}
+  if(st.needsSetup){
+    $("ld").textContent="First time here: create your admin password (8+ characters). You will use it every time you sign in.";
+    $("lgo").textContent="Create password";$("lpw2").style.display="";$("lgo").dataset.mode="setup";
+  }else{
+    $("ld").textContent="Enter your admin password.";
+    if(PW){try{await api("GET","?check=1");return unlock()}catch{}}
+  }
+}
+$("lgo").onclick=async()=>{
+  const p=$("lpw").value,setup=$("lgo").dataset.mode==="setup";$("lerr").textContent="";
+  try{
+    if(setup){if(p!==$("lpw2").value)throw new Error("Passwords don't match.");await api("POST","",{action:"setup",password:p},"")}
+    await api("GET","?check=1",null,p);PW=p;sessionStorage.setItem("hpw",p);unlock();
+  }catch(e){$("lerr").textContent=e.message}
+};
+const enter=e=>{if(e.key==="Enter")$("lgo").click()};$("lpw").addEventListener("keydown",enter);$("lpw2").addEventListener("keydown",enter);
+function unlock(){$("login").style.display="none";loadHist()}
+boot();
+
+function snap(silent){
+  const s=S();if(!s)return;
+  const h=s.innerHTML;if(hist[hi]===h)return;
+  hist=hist.slice(0,hi+1);hist.push(h);if(hist.length>80)hist.shift();hi=hist.length-1;
+  if(!silent)setDirty(true);btns();
+}
+function go(i){if(i<0||i>=hist.length)return;hi=i;S().innerHTML=hist[i];select(null);setDirty(true);btns()}
+function btns(){$("undo").disabled=hi<=0;$("redo").disabled=hi>=hist.length-1}
+function setDirty(v){isDirty=v;$("dirty").style.display=v?"":"none"}
+$("undo").onclick=()=>go(hi-1);$("redo").onclick=()=>go(hi+1);
+window.onbeforeunload=()=>isDirty?"Unsaved changes":undefined;
+function keys(e){
+  if((e.ctrlKey||e.metaKey)&&!editing){
+    if(e.key==="z"&&!e.shiftKey){e.preventDefault();go(hi-1)}
+    else if(e.key==="y"||(e.key==="z"&&e.shiftKey)){e.preventDefault();go(hi+1)}
+  }
+}
+document.addEventListener("keydown",keys);
+
+let selBox,hovBox;
+function ready(){
+  const d=D();
+  if(!d||!W().siteReady)return setTimeout(ready,300);
+  const mk=(id,css)=>{const x=d.createElement("div");x.id=id;x.style.cssText="position:fixed;pointer-events:none;z-index:99999;display:none;"+css;d.body.appendChild(x);return x};
+  selBox=mk("__sel","outline:2px solid #a4694b;background:rgba(164,105,75,.12)");
+  hovBox=mk("__hov","outline:1px dashed #3d4d73");
+  selBox.innerHTML='<span style="position:absolute;top:-20px;left:0;background:#a4694b;color:#fff;font:600 11px monospace;padding:2px 6px;border-radius:4px 4px 0 0"></span>';
+  d.addEventListener("mousemove",e=>{const t=e.target;if(!inSite(t)||t.isContentEditable){hovBox.style.display="none";return}box(hovBox,t)});
+  d.addEventListener("click",e=>{
+    if(e.target.isContentEditable)return;
+    e.preventDefault();e.stopPropagation();
+    if(editing)stopEdit();
+    select(inSite(e.target)?e.target:null);
+  },true);
+  d.addEventListener("dblclick",e=>{if(inSite(e.target))startEdit(e.target)});
+  d.addEventListener("keydown",keys);
+  d.addEventListener("scroll",upd,true);W().addEventListener("resize",upd);
+  S().querySelectorAll("a").forEach(a=>a.removeAttribute("target"));
+  snap(true);setDirty(false);renderPanel();
+}
+f.onload=ready;
+function inSite(t){return t&&t.nodeType===1&&S()&&S().contains(t)&&t!==S()}
+function box(b,t){const r=t.getBoundingClientRect();Object.assign(b.style,{display:"block",left:r.left+"px",top:r.top+"px",width:r.width+"px",height:r.height+"px"})}
+function upd(){
+  if(!selBox)return;
+  if(sel&&D().contains(sel)){box(selBox,sel);selBox.firstChild.textContent=label(sel)}else selBox.style.display="none";
+  if(hovBox)hovBox.style.display="none";
+}
+const label=e=>e.tagName.toLowerCase()+(e.id?"#"+e.id:"");
+function startEdit(el){stopEdit();editing=el;el.contentEditable="true";el.focus();el.addEventListener("input",upd);el.addEventListener("blur",stopEdit,{once:true})}
+function stopEdit(){if(!editing)return;const e=editing;editing=null;e.removeAttribute("contenteditable");snap();renderPanel()}
+function select(el){if(editing)stopEdit();sel=el;upd();renderPanel()}
+function commit(){snap();upd()}
+
+const hex=c=>{const m=(c||"").match(/\d+(\.\d+)?/g);if(!m||(m[3]!==undefined&&+m[3]===0))return "#ffffff";return "#"+m.slice(0,3).map(n=>(+n).toString(16).padStart(2,"0")).join("")};
+const row=(l,h)=>`<div class="row"><label>${l}</label>${h}</div>`;
+function renderPanel(){
+  const p=$("panel");
+  const tools=`<h4>Find &amp; replace (whole page)</h4>
+<div class="row"><input type="text" id="fa" placeholder="Find, e.g. phone number"></div>
+<div class="row"><input type="text" id="fb" placeholder="Replace with"></div>
+<button id="fr" style="width:100%">Replace everywhere</button>`;
+  if(!sel){
+    p.innerHTML=`<h4>Editor</h4><p class="muted"><b>Click</b> any element on the page to select it.<br><b>Double-click</b> text to type directly.<br>Use the panel here to change its text, link, image, colors, size and spacing.<br>Nothing goes live until <b>Save &amp; publish</b>.</p>`+tools;
+    $("fr").onclick=replaceAll;return;
+  }
+  const cs=W().getComputedStyle(sel),tag=sel.tagName,a=sel.closest("a"),leaf=!sel.children.length&&tag!=="IMG";
+  const img=tag==="IMG"?sel:null;
+  let h=`<div class="crumb"><span>${label(sel)}${sel.classList[0]?" ."+esc(sel.classList[0]):""}</span><button id="par">↑ Parent</button></div>`;
+  if(leaf)h+=`<h4>Text</h4><textarea id="txt">${esc(sel.textContent)}</textarea>`;
+  else if(!img)h+=`<p class="muted">This block holds other elements. Click an inner element, or double-click its text.</p>`;
+  if(a)h+=`<h4>Link</h4>`+row("Address",`<input type="text" id="href" value="${esc(a.getAttribute("href")||"")}" placeholder="tel:5551234567 or #book">`);
+  if(img)h+=`<h4>Image</h4>`+row("URL",`<input type="text" id="src" value="${esc((img.getAttribute("src")||"").startsWith("data:")?"(uploaded image)":img.getAttribute("src"))}">`)+row("Alt text",`<input type="text" id="alt" value="${esc(img.alt)}">`)+`<button id="up">Upload image…</button>`;
+  h+=`<h4>Background image</h4><div class="grid2"><button id="bgup">Upload…</button><button id="bgrm">Remove</button></div>`;
+  h+=`<h4>Style</h4>`
+  +row("Text color",`<input type="color" id="col" value="${hex(cs.color)}"><button id="colx">Reset</button>`)
+  +row("Background",`<input type="color" id="bg" value="${hex(cs.backgroundColor)}"><button id="bgx">Reset</button>`)
+  +row("Font size",`<input type="number" id="fs" value="${parseInt(cs.fontSize)}" min="6" max="200"><span>px</span>`)
+  +row("Weight",`<select id="fw">${[["","(default)"],["400","Normal"],["600","Semi-bold"],["800","Bold"],["900","Black"]].map(o=>`<option value="${o[0]}" ${sel.style.fontWeight===o[0]?"selected":""}>${o[1]}</option>`).join("")}</select>`)
+  +row("Align",`<div class="grid2" style="flex:1;grid-template-columns:repeat(3,1fr)"><button data-al="left">Left</button><button data-al="center">Center</button><button data-al="right">Right</button></div>`)
+  +row("Padding",`<input type="number" id="pd" value="${parseInt(cs.paddingTop)||0}" min="0"><span>px</span>`)
+  +row("Corners",`<input type="number" id="rd" value="${parseInt(cs.borderTopLeftRadius)||0}" min="0"><span>px</span>`)
+  +row("Margin top",`<input type="number" id="mt" value="${parseInt(cs.marginTop)||0}"><span>px</span>`);
+  h+=`<h4>Element</h4><div class="grid2"><button id="dup">Duplicate</button><button id="del" class="danger">Delete</button><button id="mup">Move up</button><button id="mdn">Move down</button></div>`+tools;
+  p.innerHTML=h;
+  const $$=s=>p.querySelector(s),on=(s,ev,fn)=>{const x=$$(s);if(x)x.addEventListener(ev,fn)};
+  const css=(k,v)=>{sel.style[k]=v;upd()};
+  on("#par","click",()=>sel.parentElement&&inSite(sel.parentElement)&&select(sel.parentElement));
+  on("#txt","input",e=>{sel.textContent=e.target.value;upd()});on("#txt","change",commit);
+  on("#href","input",e=>a.setAttribute("href",e.target.value));on("#href","change",commit);
+  on("#src","change",e=>{img.src=e.target.value;commit()});on("#alt","change",e=>{img.alt=e.target.value;commit()});
+  on("#up","click",()=>pickFile(900,u=>{img.src=u;commit();renderPanel()}));
+  on("#bgup","click",()=>pickFile(1600,u=>{
+    sel.style.backgroundImage=`url(${u})`;sel.style.backgroundSize="cover";sel.style.backgroundPosition="center";
+    if(sel.children.length===1&&sel.firstElementChild.tagName==="I")sel.firstElementChild.remove();commit();renderPanel()}));
+  on("#bgrm","click",()=>{sel.style.backgroundImage="none";commit()});
+  on("#col","input",e=>css("color",e.target.value));on("#col","change",commit);on("#colx","click",()=>{sel.style.color="";commit();renderPanel()});
+  on("#bg","input",e=>css("backgroundColor",e.target.value));on("#bg","change",commit);on("#bgx","click",()=>{sel.style.backgroundColor="";commit();renderPanel()});
+  on("#fs","input",e=>css("fontSize",e.target.value+"px"));on("#fs","change",commit);
+  on("#fw","change",e=>{css("fontWeight",e.target.value);commit()});
+  p.querySelectorAll("[data-al]").forEach(b=>b.onclick=()=>{css("textAlign",b.dataset.al);commit()});
+  on("#pd","input",e=>css("padding",e.target.value+"px"));on("#pd","change",commit);
+  on("#rd","input",e=>css("borderRadius",e.target.value+"px"));on("#rd","change",commit);
+  on("#mt","input",e=>css("marginTop",e.target.value+"px"));on("#mt","change",commit);
+  on("#dup","click",()=>{const c=sel.cloneNode(true);sel.after(c);commit();select(c)});
+  on("#del","click",()=>{const n=sel.nextElementSibling||sel.previousElementSibling;sel.remove();sel=null;commit();select(n&&inSite(n)?n:null)});
+  on("#mup","click",()=>{const x=sel.previousElementSibling;if(x){x.before(sel);commit()}});
+  on("#mdn","click",()=>{const x=sel.nextElementSibling;if(x){x.after(sel);commit()}});
+  on("#fr","click",replaceAll);
+}
+function replaceAll(){
+  const a=$("fa").value;if(!a)return;
+  const s=S(),n=s.innerHTML.split(a).length-1;
+  if(!n)return toast("Nothing found.",1);
+  s.innerHTML=s.innerHTML.split(a).join($("fb").value);sel=null;commit();select(null);
+  toast(`Replaced ${n} place(s). Press Save & publish to go live.`);
+}
+
+function pickFile(max,cb){fileCb=u=>cb(u);fileCb.max=max;$("file").click()}
+$("file").onchange=e=>{
+  const file=e.target.files[0];e.target.value="";if(!file||!fileCb)return;
+  const cb=fileCb,max=cb.max,r=new FileReader();
+  r.onload=()=>{
+    if(file.type==="image/svg+xml"||file.type==="image/gif")return cb(r.result);
+    const i=new Image();i.onload=()=>{
+      const s=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");
+      c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);c.getContext("2d").drawImage(i,0,0,c.width,c.height);
+      cb(c.toDataURL("image/jpeg",.82));
+    };i.src=r.result;
+  };r.readAsDataURL(file);
+};
+
+document.querySelectorAll(".dev").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".dev").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+  f.style.width=b.dataset.w;setTimeout(upd,250);
+});
+
+function serialize(){
+  const s=S().cloneNode(true);
+  s.querySelectorAll("[contenteditable]").forEach(e=>e.removeAttribute("contenteditable"));
+  const m=s.querySelector("#mnav");if(m)m.style.maxHeight="0";
+  const b=s.querySelector("#burger");if(b)b.setAttribute("aria-expanded","false");
+  return s.innerHTML;
+}
+$("save").onclick=async()=>{
+  if(editing)stopEdit();
+  try{await api("POST","",{html:serialize()});setDirty(false);toast("Saved! Your live site is updated now.");loadHist()}
+  catch(e){toast(e.message,1)}
+};
+$("reset").onclick=async()=>{
+  if(!confirm("Reset the live site to the original design? Your current version is kept in Version history."))return;
+  try{
+    await api("DELETE");toast("Reset. Reloading…");setDirty(false);setTimeout(()=>f.contentWindow.location.reload(),700);
+  }catch(e){toast(e.message,1)}
+};
+async function loadHist(){
+  try{
+    const d=await api("GET","?list=1"),h=$("hist");
+    h.innerHTML='<option value="">Version history…</option>'+(d.backups||[]).map(k=>`<option value="${k}">${new Date(+k.split(":")[1]).toLocaleString()}</option>`).join("");
+  }catch{}
+}
+$("hist").onchange=async e=>{
+  const k=e.target.value;e.target.value="";if(!k)return;
+  if(!confirm("Load this older version into the editor? You can review it, then Save & publish to make it live."))return;
+  try{const d=await api("GET","?backup="+encodeURIComponent(k));S().innerHTML=d.html;select(null);snap();toast("Loaded. Press Save & publish to make it live.")}
+  catch(err){toast(err.message,1)}
+};
+</script>
+</body>
+</html>
