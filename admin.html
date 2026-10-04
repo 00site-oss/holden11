@@ -3,34 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Site Admin</title>
+<title>Holden · Website Admin</title><meta name="description" content="Holden website administration and visual element editor"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font:13px system-ui,sans-serif;display:flex;flex-direction:column;height:100vh;background:#e6e9ef;color:#1c2740}
-#top{background:#1c2740;color:#fff;padding:8px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-#top b{font-size:15px;margin-right:8px}#top .sp{flex:1}
-button,select,.b{padding:7px 12px;border:0;border-radius:6px;background:#3d4d73;color:#fff;font:600 12px system-ui;cursor:pointer;text-decoration:none}
-button:hover{filter:brightness(1.15)}button:disabled{opacity:.4;cursor:default}
-button.on{background:#a4694b}button.save{background:#a4694b;font-size:13px;padding:8px 18px}button.danger{background:#9b2c2c}
-select{max-width:160px;background:#3d4d73;color:#fff;border:0;border-radius:6px;padding:7px}
-#main{flex:1;display:flex;min-height:0}
-#stage{flex:1;display:flex;justify-content:center;overflow:auto;padding:12px}
-iframe{border:0;background:#fff;height:100%;width:100%;box-shadow:0 2px 20px #0003;transition:width .2s}
-#panel{width:320px;background:#fff;border-left:1px solid #cfd4de;overflow:auto;padding:14px}
-#panel h4{margin:16px 0 6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7690}
-#panel h4:first-child{margin-top:0}
-.row{display:flex;gap:6px;align-items:center;margin-bottom:6px}.row label{width:78px;color:#556;font-size:12px}
-.row input[type=text],.row input[type=number],.row textarea,.row select{flex:1;min-width:0;padding:6px 8px;border:1px solid #c5cbd8;border-radius:6px;font:12px system-ui;background:#fff;color:#1c2740}
-.row input[type=color]{width:38px;height:28px;padding:0;border:1px solid #c5cbd8;border-radius:6px;background:#fff}
-textarea{min-height:90px;resize:vertical;width:100%}
-.crumb{background:#eef0f5;border-radius:6px;padding:7px 9px;margin-bottom:10px;font-family:monospace;font-size:12px;display:flex;justify-content:space-between;align-items:center;gap:6px}
-.muted{color:#6b7690;line-height:1.5}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.grid2 button,#panel button{background:#e4e8f1;color:#1c2740}#panel button.danger{background:#f3d6d6;color:#9b2c2c}
-#msg{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#1c7a3a;color:#fff;padding:12px 20px;border-radius:8px;font-weight:600;display:none;z-index:99}#msg.err{background:#b3261e}
-#login{position:fixed;inset:0;background:#1c2740;display:flex;align-items:center;justify-content:center;z-index:100}
-#login div{background:#fff;padding:28px;border-radius:12px;width:340px}
-#login input{width:100%;padding:10px;margin:10px 0;border:1px solid #c5cbd8;border-radius:6px;font-size:14px}
-#login button{width:100%;padding:11px;background:#a4694b;font-size:14px}
+:root{--bg:oklch(.965 .004 250);--surface:oklch(1 0 0);--ink:oklch(.25 .015 250);--muted:oklch(.55 .015 250);--line:oklch(.88 .012 250);--accent:oklch(.54 .17 253);--accent-light:oklch(.95 .023 253);--success:oklch(.5 .12 155);--danger:oklch(.52 .19 25);--shadow:0 2px 8px oklch(.2 0 0/.06);--radius:4px}
+*{box-sizing:border-box}body{margin:0;font:13px 'IBM Plex Sans',Arial,sans-serif;display:flex;flex-direction:column;height:100vh;background:var(--bg);color:var(--ink);letter-spacing:0}button,select,input,textarea{font:inherit}button,a,input,select,textarea{outline-offset:3px}button:focus-visible,a:focus-visible{outline:2px solid var(--accent)}button,select,.b{padding:8px 11px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);color:var(--ink);font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}button:hover,.b:hover{background:var(--accent-light);border-color:var(--accent)}button:disabled{opacity:.35;cursor:default}button.on{background:var(--accent-light);color:var(--accent);border-color:var(--accent)}button.save{background:var(--accent);border-color:var(--accent);color:var(--surface);padding:9px 17px}button.danger{color:var(--danger)}svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+#top{background:var(--surface);border-bottom:1px solid var(--line);padding:15px 22px;display:flex;gap:9px;align-items:center;min-height:72px}#top b{font-size:17px;font-weight:600}#top .sp{flex:1}.brand-icon{display:grid;place-items:center;background:var(--accent);color:var(--surface);width:34px;height:34px;border-radius:4px}.brand-icon svg{width:21px;height:21px}.brand-sub{font-size:11px;color:var(--muted);margin-top:2px}.divider{width:1px;height:26px;background:var(--line);margin:0 6px}.repo{font-size:12px;color:var(--muted)}
+#toolbar{background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px;padding:9px 22px;min-height:51px}#toolbar .dev{width:35px;height:31px;padding:6px}#toolbar .on{background:var(--accent-light)}#toolbar .sp{flex:1}.toolbar-label{font-size:12px;color:var(--muted);margin-right:10px}#viewport-label{font-size:11px;color:var(--muted);margin-left:6px}#dirty{color:var(--accent);font-size:12px}.status{color:var(--success);font-size:12px;display:flex;gap:6px;align-items:center}.status:before{content:'';width:6px;height:6px;border-radius:50%;background:var(--success)}
+#main{flex:1;display:flex;min-height:0}#layers{width:232px;background:var(--surface);border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0}.panel-heading{padding:18px 17px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:13px;border-bottom:1px solid var(--line)}.count{font-size:10px;color:var(--muted);background:var(--bg);border:1px solid var(--line);padding:2px 5px;border-radius:3px}.layer-search{margin:12px;width:calc(100% - 24px);padding:8px 9px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--ink);font-size:12px}#tree{overflow:auto;flex:1;padding:2px 8px 12px}.tree-item{width:100%;justify-content:flex-start;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-color:transparent;border-radius:3px;margin:1px 0;font-size:12px;padding:8px;min-height:33px}.tree-item svg{width:13px;height:13px;color:var(--muted)}.tree-item.active{border-color:var(--line);background:var(--accent-light);color:var(--accent)}.layer-footer{padding:13px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);display:flex;align-items:center;gap:7px}
+#stage-wrap{flex:1;display:flex;flex-direction:column;min-width:0}.stage-caption{padding:17px 25px 0;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}#stage{flex:1;display:flex;justify-content:center;overflow:auto;padding:17px 24px 24px;min-height:0}iframe{border:1px solid var(--line);background:var(--surface);height:100%;width:100%;box-shadow:var(--shadow);transition:width .2s;flex-shrink:0}#panel{width:292px;background:var(--surface);border-left:1px solid var(--line);overflow:auto;flex-shrink:0}#panel-content{padding:16px}#panel h4{margin:22px -16px 13px;padding:12px 16px 0;border-top:1px solid var(--line);font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0}#panel h4:first-child{margin-top:0;border-top:0}.row{display:flex;gap:7px;align-items:center;margin-bottom:9px}.row label{width:83px;flex-shrink:0;color:var(--muted);font-size:12px}.row input[type=text],.row input[type=number],.row textarea,.row select{flex:1;min-width:0;width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:4px;font:12px inherit;background:var(--surface);color:var(--ink)}.row input[type=color]{width:31px;height:29px;padding:3px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}textarea{min-height:85px;resize:vertical;width:100%;padding:9px;border:1px solid var(--line);border-radius:4px;color:var(--ink);background:var(--surface);font:12px 'IBM Plex Sans',Arial,sans-serif;line-height:1.6}.crumb{background:var(--accent-light);border:1px solid var(--line);border-radius:4px;padding:9px;margin-bottom:10px;font-family:monospace;font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:6px;overflow-wrap:anywhere}.crumb button{font-family:Arial;font-size:10px;padding:5px;white-space:nowrap}.muted{color:var(--muted);line-height:1.6}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}.grid2 button,#panel button{font-size:11px;padding:7px 8px}#panel button.danger{color:var(--danger)}#msg{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);background:var(--success);color:var(--surface);padding:12px 20px;border-radius:4px;font-weight:500;display:none;z-index:99;max-width:90vw}#msg.err{background:var(--danger)}#login{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:100}#login>div{background:var(--surface);border:1px solid var(--line);padding:30px;border-radius:6px;width:360px;max-width:90vw;box-shadow:var(--shadow)}#login input{width:100%;padding:11px;margin:12px 0;border:1px solid var(--line);border-radius:4px;font-size:14px}#login button{width:100%;padding:11px;background:var(--accent);color:var(--surface);border-color:var(--accent);font-size:14px}#bottom{height:28px;min-height:28px;background:var(--surface);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 17px;font-size:10px;color:var(--muted)}#lerr{color:var(--danger);margin:8px 0 0}
+@media(max-width:1050px){#layers{width:180px}#panel{width:260px}.repo{display:none}#top{padding:12px}#toolbar{padding:8px 12px}#stage{padding:12px}}@media(max-width:760px){#layers{display:none}#panel{width:230px}#top{flex-wrap:wrap;gap:6px}#top b{font-size:14px}.brand-sub,.repo,.top-secondary{display:none}#toolbar{gap:4px;flex-wrap:wrap}.toolbar-label{display:none}#stage{padding:8px}.stage-caption{padding:10px 8px 0}#viewport-label{display:none}#panel-content{padding:12px}#panel h4{margin-left:-12px;margin-right:-12px;padding-left:12px}.row{gap:4px}.row label{width:67px}#hist{width:115px}#bottom span:last-child{display:none}}@media(max-width:480px){#main{flex-direction:column}#stage-wrap{height:52%;flex:none}#panel{width:100%;border-left:0;border-top:1px solid var(--line);flex:1;min-height:0}#top .divider{display:none}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
@@ -45,26 +26,16 @@ textarea{min-height:90px;resize:vertical;width:100%}
 </div></div>
 
 <div id="top">
-<b>Site Admin</b>
-<button id="undo" title="Ctrl+Z">↶ Undo</button><button id="redo" title="Ctrl+Y">↷ Redo</button>
-<span style="width:10px"></span>
-<button data-w="100%" class="dev on">Desktop</button><button data-w="768px" class="dev">Tablet</button><button data-w="390px" class="dev">Mobile</button>
-<span class="sp"></span>
-<span id="dirty" style="display:none;color:#ffcf8a">● Unsaved changes</span>
-<select id="hist"><option value="">Version history…</option></select>
-<a class="b" href="index.html" target="_blank">View site</a>
-<button class="danger" id="reset">Reset</button>
-<button class="save" id="save">Save &amp; publish</button>
+<div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M5 4v16M19 4v16M5 12h14"/></svg></div><div><b>Holden Admin</b><div class="brand-sub">Website management</div></div><span class="divider"></span><span class="repo">holden11 / Home Services</span><span class="sp"></span><span class="status top-secondary" id="save-status">All changes saved</span><a class="b top-secondary" href="index.html" id="view-site" target="_blank">View site ↗</a><button class="save" id="save">Save &amp; publish</button>
 </div>
-<div id="main">
-<div id="stage"><iframe id="f" src="index.html?edit=1"></iframe></div>
-<div id="panel"></div>
-</div>
+<div id="toolbar"><span class="toolbar-label">Home page</span><span class="divider"></span><button id="undo" title="Undo" aria-label="Undo">↶</button><button id="redo" title="Redo" aria-label="Redo">↷</button><span class="divider"></span><button data-w="100%" class="dev on" title="Desktop" aria-label="Desktop">▣</button><button data-w="768px" class="dev" title="Tablet" aria-label="Tablet">▯</button><button data-w="390px" class="dev" title="Mobile" aria-label="Mobile">▥</button><span id="viewport-label">Desktop · 100%</span><span class="sp"></span><span id="dirty" style="display:none">● Unsaved changes</span><button id="outlines" class="on" title="Show element boundaries">▧ Borders</button><select id="hist" aria-label="Version history"><option value="">Version history</option></select><button class="danger top-secondary" id="reset" title="Reset website">Reset</button></div>
+<div id="main"><aside id="layers"><div class="panel-heading">Page elements <span class="count" id="element-count">0</span></div><input class="layer-search" id="layer-search" placeholder="Search elements…" aria-label="Search elements"><div id="tree"></div><div class="layer-footer">◇ &nbsp; Home Services / index.html</div></aside><div id="stage-wrap"><div class="stage-caption"><span>HOME PAGE <span style="margin-left:8px">/</span></span><span id="canvas-state">LIVE CANVAS</span></div><div id="stage"><iframe id="f" title="Website editing canvas" src="index.html?edit=1"></iframe></div></div><aside id="panel"><div class="panel-heading">Element properties <span class="count">◈</span></div><div id="panel-content"></div></aside></div><div id="bottom"><span id="selection-status">No element selected</span><span>Holden website editor &nbsp; · &nbsp; holden11</span></div>
 <input type="file" id="file" accept="image/*" hidden>
 <div id="msg"></div>
 
 <script>
-const $=id=>document.getElementById(id),f=$("f");
+const $=id=>document.getElementById(id),f=$("f"),preview=new URLSearchParams(location.search).has("preview");
+if(preview){f.src="site-preview.html";$("view-site").href="site-preview.html";$("save").textContent="Export HTML";$("canvas-state").textContent="LOCAL DRAFT";$("hist").disabled=true;$("reset").title="Restore original local draft";}
 let PW=sessionStorage.getItem("hpw")||"",sel=null,hist=[],hi=-1,isDirty=false,fileCb=null,editing=null;
 const D=()=>f.contentDocument,W=()=>f.contentWindow,S=()=>D()&&D().getElementById("site");
 const toast=(t,e)=>{const m=$("msg");m.textContent=t;m.className=e?"err":"";m.style.display="block";clearTimeout(m.t);m.t=setTimeout(()=>m.style.display="none",4000)};
@@ -96,7 +67,7 @@ $("lgo").onclick=async()=>{
 };
 const enter=e=>{if(e.key==="Enter")$("lgo").click()};$("lpw").addEventListener("keydown",enter);$("lpw2").addEventListener("keydown",enter);
 function unlock(){$("login").style.display="none";loadHist()}
-boot();
+if(preview){$("login").style.display="none";}else boot();
 
 function snap(silent){
   const s=S();if(!s)return;
@@ -106,7 +77,7 @@ function snap(silent){
 }
 function go(i){if(i<0||i>=hist.length)return;hi=i;S().innerHTML=hist[i];select(null);setDirty(true);btns()}
 function btns(){$("undo").disabled=hi<=0;$("redo").disabled=hi>=hist.length-1}
-function setDirty(v){isDirty=v;$("dirty").style.display=v?"":"none"}
+function setDirty(v){isDirty=v;$("dirty").style.display=v?"":"none";$("save-status").textContent=v?"Draft changes":preview?"Local draft":"All changes saved";}
 $("undo").onclick=()=>go(hi-1);$("redo").onclick=()=>go(hi+1);
 window.onbeforeunload=()=>isDirty?"Unsaved changes":undefined;
 function keys(e){
@@ -122,9 +93,9 @@ function ready(){
   const d=D();
   if(!d||!W().siteReady)return setTimeout(ready,300);
   const mk=(id,css)=>{const x=d.createElement("div");x.id=id;x.style.cssText="position:fixed;pointer-events:none;z-index:99999;display:none;"+css;d.body.appendChild(x);return x};
-  selBox=mk("__sel","outline:2px solid #a4694b;background:rgba(164,105,75,.12)");
-  hovBox=mk("__hov","outline:1px dashed #3d4d73");
-  selBox.innerHTML='<span style="position:absolute;top:-20px;left:0;background:#a4694b;color:#fff;font:600 11px monospace;padding:2px 6px;border-radius:4px 4px 0 0"></span>';
+  selBox=mk("__sel","outline:2px solid oklch(.54 .17 253);background:oklch(.54 .17 253/.07)");
+  hovBox=mk("__hov","outline:1px dashed oklch(.54 .17 253)");
+  selBox.innerHTML='<span style="position:absolute;top:-20px;left:0;background:oklch(.54 .17 253);color:oklch(1 0 0);font:600 11px monospace;padding:2px 6px;border-radius:4px 4px 0 0"></span>';
   d.addEventListener("mousemove",e=>{const t=e.target;if(!inSite(t)||t.isContentEditable){hovBox.style.display="none";return}box(hovBox,t)});
   d.addEventListener("click",e=>{
     if(e.target.isContentEditable)return;
@@ -136,10 +107,10 @@ function ready(){
   d.addEventListener("keydown",keys);
   d.addEventListener("scroll",upd,true);W().addEventListener("resize",upd);
   S().querySelectorAll("a").forEach(a=>a.removeAttribute("target"));
-  snap(true);setDirty(false);renderPanel();
+  snap(true);setDirty(false);renderPanel();initElements();select(S().querySelector("h1 span")||S());
 }
 f.onload=ready;
-function inSite(t){return t&&t.nodeType===1&&S()&&S().contains(t)&&t!==S()}
+function inSite(t){return t&&t.nodeType===1&&S()&&S().contains(t)&&true}
 function box(b,t){const r=t.getBoundingClientRect();Object.assign(b.style,{display:"block",left:r.left+"px",top:r.top+"px",width:r.width+"px",height:r.height+"px"})}
 function upd(){
   if(!selBox)return;
@@ -147,28 +118,28 @@ function upd(){
   if(hovBox)hovBox.style.display="none";
 }
 const label=e=>e.tagName.toLowerCase()+(e.id?"#"+e.id:"");
-function startEdit(el){stopEdit();editing=el;el.contentEditable="true";el.focus();el.addEventListener("input",upd);el.addEventListener("blur",stopEdit,{once:true})}
+function startEdit(el){if(["IMG","INPUT","SELECT","IFRAME","VIDEO"].includes(el.tagName))return select(el);stopEdit();editing=el;el.contentEditable="true";el.focus();el.addEventListener("input",upd);el.addEventListener("blur",stopEdit,{once:true})}
 function stopEdit(){if(!editing)return;const e=editing;editing=null;e.removeAttribute("contenteditable");snap();renderPanel()}
-function select(el){if(editing)stopEdit();sel=el;upd();renderPanel()}
-function commit(){snap();upd()}
+function select(el){if(editing)stopEdit();sel=el;upd();renderPanel();renderTree();$("selection-status").textContent=el?"Selected: "+label(el):"No element selected";}
+function commit(){snap();upd();renderTree()}
 
 const hex=c=>{const m=(c||"").match(/\d+(\.\d+)?/g);if(!m||(m[3]!==undefined&&+m[3]===0))return "#ffffff";return "#"+m.slice(0,3).map(n=>(+n).toString(16).padStart(2,"0")).join("")};
 const row=(l,h)=>`<div class="row"><label>${l}</label>${h}</div>`;
 function renderPanel(){
-  const p=$("panel");
+  const p=$("panel-content");
   const tools=`<h4>Find &amp; replace (whole page)</h4>
 <div class="row"><input type="text" id="fa" placeholder="Find, e.g. phone number"></div>
 <div class="row"><input type="text" id="fb" placeholder="Replace with"></div>
 <button id="fr" style="width:100%">Replace everywhere</button>`;
   if(!sel){
-    p.innerHTML=`<h4>Editor</h4><p class="muted"><b>Click</b> any element on the page to select it.<br><b>Double-click</b> text to type directly.<br>Use the panel here to change its text, link, image, colors, size and spacing.<br>Nothing goes live until <b>Save &amp; publish</b>.</p>`+tools;
+    p.innerHTML=`<h4>Selection</h4><p class="muted">No element selected</p>`+tools;
     $("fr").onclick=replaceAll;return;
   }
   const cs=W().getComputedStyle(sel),tag=sel.tagName,a=sel.closest("a"),leaf=!sel.children.length&&tag!=="IMG";
   const img=tag==="IMG"?sel:null;
   let h=`<div class="crumb"><span>${label(sel)}${sel.classList[0]?" ."+esc(sel.classList[0]):""}</span><button id="par">↑ Parent</button></div>`;
   if(leaf)h+=`<h4>Text</h4><textarea id="txt">${esc(sel.textContent)}</textarea>`;
-  else if(!img)h+=`<p class="muted">This block holds other elements. Click an inner element, or double-click its text.</p>`;
+  else if(!img){h+=`<h4>Content</h4>`;Array.from(sel.childNodes).filter(n=>n.nodeType===3&&n.textContent.trim()).forEach((n,i)=>{h+=row("Text "+(i+1),`<input type="text" data-node="${i}" value="${esc(n.textContent)}">`)});h+=`<details><summary class="muted">Element HTML</summary><textarea id="innerhtml">${esc(sel.innerHTML)}</textarea><button id="applyhtml">Apply HTML</button></details>`;}
   if(a)h+=`<h4>Link</h4>`+row("Address",`<input type="text" id="href" value="${esc(a.getAttribute("href")||"")}" placeholder="tel:5551234567 or #book">`);
   if(img)h+=`<h4>Image</h4>`+row("URL",`<input type="text" id="src" value="${esc((img.getAttribute("src")||"").startsWith("data:")?"(uploaded image)":img.getAttribute("src"))}">`)+row("Alt text",`<input type="text" id="alt" value="${esc(img.alt)}">`)+`<button id="up">Upload image…</button>`;
   h+=`<h4>Background image</h4><div class="grid2"><button id="bgup">Upload…</button><button id="bgrm">Remove</button></div>`;
@@ -181,10 +152,11 @@ function renderPanel(){
   +row("Padding",`<input type="number" id="pd" value="${parseInt(cs.paddingTop)||0}" min="0"><span>px</span>`)
   +row("Corners",`<input type="number" id="rd" value="${parseInt(cs.borderTopLeftRadius)||0}" min="0"><span>px</span>`)
   +row("Margin top",`<input type="number" id="mt" value="${parseInt(cs.marginTop)||0}"><span>px</span>`);
-  h+=`<h4>Element</h4><div class="grid2"><button id="dup">Duplicate</button><button id="del" class="danger">Delete</button><button id="mup">Move up</button><button id="mdn">Move down</button></div>`+tools;
+  h+=`<h4>Border &amp; dimensions</h4>`+row("Border width",`<input type="number" id="bw" min="0" value="${parseInt(cs.borderTopWidth)||0}"><span>px</span>`)+row("Border color",`<input type="color" id="bc" value="${hex(cs.borderTopColor)}">`)+row("Border style",`<select id="bs">${["none","solid","dashed","dotted","double"].map(v=>`<option ${cs.borderTopStyle===v?"selected":""}>${v}</option>`).join("")}</select>`)+row("Width",`<input type="text" id="ew" value="${esc(sel.style.width)}" placeholder="auto / 100%">`)+row("Height",`<input type="text" id="eh" value="${esc(sel.style.height)}" placeholder="auto / 200px">`)+row("Element ID",`<input type="text" id="eid" value="${esc(sel.id)}">`);h+=`<h4>Element</h4><div class="grid2"><button id="dup">Duplicate</button><button id="del" class="danger">Delete</button><button id="mup">Move up</button><button id="mdn">Move down</button></div>`+tools;
   p.innerHTML=h;
   const $$=s=>p.querySelector(s),on=(s,ev,fn)=>{const x=$$(s);if(x)x.addEventListener(ev,fn)};
   const css=(k,v)=>{sel.style[k]=v;upd()};
+  const nodes=Array.from(sel.childNodes).filter(n=>n.nodeType===3&&n.textContent.trim());p.querySelectorAll("[data-node]").forEach(x=>{x.oninput=()=>{const n=nodes[+x.dataset.node];if(n){n.textContent=x.value;upd()}};x.onchange=commit;});on("#applyhtml","click",()=>{sel.innerHTML=$("innerhtml").value;commit();renderPanel()});[ ["bw","borderWidth","px"],["bc","borderColor",""],["bs","borderStyle",""],["ew","width",""],["eh","height",""] ].forEach(([id,k,unit])=>on("#"+id,"change",e=>{css(k,e.target.value+unit);if(id==="bw"&&sel.style.borderStyle!=="solid")css("borderStyle","solid");commit()}));on("#eid","change",e=>{sel.id=e.target.value;commit();renderPanel()});
   on("#par","click",()=>sel.parentElement&&inSite(sel.parentElement)&&select(sel.parentElement));
   on("#txt","input",e=>{sel.textContent=e.target.value;upd()});on("#txt","change",commit);
   on("#href","input",e=>a.setAttribute("href",e.target.value));on("#href","change",commit);
@@ -232,7 +204,7 @@ $("file").onchange=e=>{
 
 document.querySelectorAll(".dev").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".dev").forEach(x=>x.classList.remove("on"));b.classList.add("on");
-  f.style.width=b.dataset.w;setTimeout(upd,250);
+  f.style.width=b.dataset.w;$("viewport-label").textContent=b.title+" · "+b.dataset.w;setTimeout(upd,250);
 });
 
 function serialize(){
@@ -244,10 +216,12 @@ function serialize(){
 }
 $("save").onclick=async()=>{
   if(editing)stopEdit();
+  if(preview){const d=D().documentElement.cloneNode(true);d.querySelector("#site").innerHTML=serialize();d.querySelectorAll("#__sel,#__hov,#__editorstyle,script").forEach(e=>e.remove());d.querySelector("body").classList.remove("editor-outlines");const blob=new Blob(["<!DOCTYPE html>\n"+d.outerHTML],{type:"text/html"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="index.html";a.click();URL.revokeObjectURL(url);setDirty(false);toast("Website HTML exported.");return;}
   try{await api("POST","",{html:serialize()});setDirty(false);toast("Saved! Your live site is updated now.");loadHist()}
   catch(e){toast(e.message,1)}
 };
 $("reset").onclick=async()=>{
+  if(preview){if(confirm("Discard local edits and restore the original website?")){hist=[];hi=-1;sel=null;setDirty(false);f.contentWindow.location.reload();}return;}
   if(!confirm("Reset the live site to the original design? Your current version is kept in Version history."))return;
   try{
     await api("DELETE");toast("Reset. Reloading…");setDirty(false);setTimeout(()=>f.contentWindow.location.reload(),700);
@@ -265,6 +239,12 @@ $("hist").onchange=async e=>{
   try{const d=await api("GET","?backup="+encodeURIComponent(k));S().innerHTML=d.html;select(null);snap();toast("Loaded. Press Save & publish to make it live.")}
   catch(err){toast(err.message,1)}
 };
+
+let outlines=true;
+function initElements(){const st=D().createElement("style");st.id="__editorstyle";st.textContent="body.editor-outlines #site,body.editor-outlines #site *{outline:1px dashed oklch(.54 .17 253/.23);outline-offset:-1px}body.editor-outlines #site *:hover{outline-color:oklch(.54 .17 253)}";D().head.appendChild(st);D().body.classList.toggle("editor-outlines",outlines);renderTree();}
+function renderTree(){if(!S())return;const elements=[S(),...S().querySelectorAll("*")].filter(e=>!["SCRIPT","STYLE","BR"].includes(e.tagName)),q=$("layer-search").value.toLowerCase();$("element-count").textContent=elements.length;$("tree").replaceChildren();elements.forEach(el=>{const text=el.tagName==="IMG"?el.alt:el.children.length?label(el):el.textContent.trim().slice(0,30);if(q&&!(label(el)+" "+el.textContent).toLowerCase().includes(q))return;let depth=0,x=el;while(x.parentElement&&x!==S()){depth++;x=x.parentElement;}const b=document.createElement("button");b.className="tree-item"+(el===sel?" active":"");b.style.paddingLeft=(8+Math.min(depth,4)*11)+"px";b.title=label(el);b.innerHTML='<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/></svg>';b.appendChild(document.createTextNode(text||label(el)));b.onclick=()=>{select(el);el.scrollIntoView({block:"center",behavior:"smooth"});setTimeout(upd,200)};$("tree").appendChild(b);});}
+$("layer-search").oninput=renderTree;$("outlines").onclick=()=>{outlines=!outlines;$("outlines").classList.toggle("on",outlines);D()?.body.classList.toggle("editor-outlines",outlines);};
+
 </script>
 </body>
 </html>
